@@ -16,6 +16,8 @@ public class Renderer {
     private Matrix4f projectionMatrix;
 
     public Renderer(StaticShader shader) {
+        GL45.glEnable(GL45.GL_CULL_FACE);
+        GL45.glCullFace(GL45.GL_BACK);
         createProjectionMatrix();
         shader.start();
         shader.loadProjectionMatrix(projectionMatrix);

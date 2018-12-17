@@ -24,6 +24,12 @@ public class Camera {
         if(Keyboard.isKeyDown(KeyEvent.VK_S)) {
             position.z += 0.02f;
         }
+        if(Keyboard.isKeyDown(KeyEvent.VK_E)) {
+            position.y += 0.02f;
+        }
+        if(Keyboard.isKeyDown(KeyEvent.VK_Q)) {
+            position.y -= 0.02f;
+        }
         if(Keyboard.isKeyDown(265)) {
            pitch -= 1;
         }

@@ -10,12 +10,15 @@ import com.maddev.texture.ModelTexture;
 import org.joml.Vector3f;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game extends GameWindow {
 
     private final ObjLoader loader;
     private Renderer renderer;
-    private Entity entity;
+    private List<Entity> entities;
+
     private StaticShader shader;
     private Camera camera;
 
@@ -28,11 +31,13 @@ public class Game extends GameWindow {
     void onLoad() {
 
         ModelLoader modelLoader = new ModelLoader();
-        RawModel rawModel = loader.load("stall.obj", modelLoader);
-        int texture = modelLoader.loadTexture("textures/stallTexture.png");
+        RawModel rawModel = loader.load("character.obj", modelLoader);
+        int texture = modelLoader.loadTexture("textures/Character Texture.png");
         var textured = new TexturedModel(rawModel, new ModelTexture(texture));
-        entity = new Entity(textured, new Vector3f(0, 0, -1), 0, 0, 0, 1);
-
+        entities = new ArrayList<>();
+        for(int i = 0; i < 20; i++) {
+            entities.add(new Entity(textured, new Vector3f(i, 0, i), 0, 0, 0, 0.2f));
+        }
 
         try {
             shader = new StaticShader();
@@ -50,10 +55,14 @@ public class Game extends GameWindow {
 
     @Override
     void onLoop() {
+
+
         camera.move();
         shader.start();
         shader.loadViewMatrix(camera);
-        renderer.render(entity, shader);
+        for (Entity entity : entities) {
+            renderer.render(entity, shader);
+        }
         shader.stop();
     }
 }
